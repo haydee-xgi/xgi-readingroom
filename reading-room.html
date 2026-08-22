@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XGI Reading Room</title>
+<style>
+  /* ── Reset ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ── Tokens ── */
+  :root {
+    --navy:      #1C2B3A;
+    --gold:      #F5C400;
+    --cream:     #F5F2EB;
+    --white:     #FFFFFF;
+    --ink:       #1C2B3A;
+    --ink-soft:  #4A5A6A;
+    --ink-pale:  #8A9AAA;
+    --hairline:  #DDD9D0;
+    --green:     #00b86b;
+    --violet:    #6366F1;
+    --amber:     #FEF3C7;
+    --bg:        #F5F2EB;
+    --card-bg:   #FFFFFF;
+
+    /* workstream colors */
+    --ws-pilot:    #1C2B3A;
+    --ws-identity: #6366F1;
+    --ws-audience: #00b86b;
+    --ws-revenue:  #F59E0B;
+    --ws-tech:     #0EA5E9;
+    --ws-fhn:      #EC4899;
+    --ws-legal:    #8B5CF6;
+    --ws-all:      #4A5A6A;
+  }
+
+  /* ── Base ── */
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--navy);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(28,43,58,0.18);
+  }
+
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    height: 64px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+
+  .logo-xgi {
+    font-family: Georgia, serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+  }
+
+  .logo-room {
+    font-family: Georgia, serif;
+    font-size: 13px;
+    color: rgba(245,242,235,0.55);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .header-divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(245,196,0,0.25);
+    flex-shrink: 0;
+  }
+
+  /* search */
+  .search-wrap {
+    flex: 1;
+    position: relative;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink-pale);
+    pointer-events: none;
+  }
+
+  #search {
+    width: 100%;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(245,196,0,0.2);
+    border-radius: 6px;
+    padding: 8px 12px 8px 36px;
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 13px;
+    color: var(--cream);
+    outline: none;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  #search::placeholder { color: rgba(245,242,235,0.35); }
+  #search:focus {
+    border-color: rgba(245,196,0,0.5);
+    background: rgba(255,255,255,0.11);
+  }
+
+  .entry-count {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 12px;
+    color: rgba(245,242,235,0.4);
+    flex-shrink: 0;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── Workstream Filter Bar ── */
+  .filter-bar {
+    background: var(--navy);
+    border-top: 1px solid rgba(245,196,0,0.12);
+  }
+
+  .filter-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    height: 44px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .filter-inner::-webkit-scrollbar { display: none; }
+
+  .filter-label {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 11px;
+    color: rgba(245,242,235,0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+    margin-right: 4px;
+  }
+
+  .ws-chip {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 100px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: all 0.15s;
+    letter-spacing: 0.02em;
+    background: transparent;
+    color: rgba(245,242,235,0.5);
+    border-color: rgba(245,242,235,0.15);
+  }
+
+  .ws-chip:hover {
+    color: var(--cream);
+    border-color: rgba(245,242,235,0.35);
+  }
+
+  .ws-chip.active {
+    color: var(--navy);
+    border-color: transparent;
+  }
+
+  /* ── Main layout ── */
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 32px 80px;
+  }
+
+  /* ── Empty state ── */
+  .empty-state {
+    text-align: center;
+    padding: 96px 32px;
+  }
+
+  .empty-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+
+  .empty-state h2 {
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 10px;
+    font-weight: normal;
+  }
+
+  .empty-state p {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    color: var(--ink-soft);
+    max-width: 440px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ── Cards grid ── */
+  #cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 24px;
+  }
+
+  /* ── Article Card ── */
+  .article-card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(28,43,58,0.07), 0 4px 16px rgba(28,43,58,0.05);
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .article-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(28,43,58,0.12), 0 12px 32px rgba(28,43,58,0.08);
+  }
+
+  /* card header */
+  .card-header {
+    background: var(--navy);
+    padding: 20px 22px 16px;
+  }
+
+  .card-number {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .card-title {
+    font-family: Georgia, serif;
+    font-size: 17px;
+    font-weight: bold;
+    color: var(--cream);
+    line-height: 1.35;
+    margin-bottom: 5px;
+  }
+
+  .card-meta {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 12px;
+    color: rgba(245,242,235,0.45);
+  }
+
+  /* card body */
+  .card-body {
+    padding: 18px 22px 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .card-section-label {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .one-line-label { color: var(--ink-pale); }
+  .tensions-label { color: #D97706; }
+  .moves-label    { color: var(--violet); }
+  .xgi-label      { color: var(--green); }
+
+  .card-one-line {
+    font-family: Georgia, serif;
+    font-size: 13.5px;
+    color: var(--ink);
+    line-height: 1.55;
+    font-style: italic;
+  }
+
+  .card-section-text {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  /* card footer */
+  .card-footer {
+    border-top: 1px solid var(--hairline);
+    padding: 12px 22px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .ws-tag {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 100px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: white;
+  }
+
+  .card-date {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 11px;
+    color: var(--ink-pale);
+    margin-left: auto;
+  }
+
+  /* ── Detail Modal ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(28,43,58,0.6);
+    z-index: 200;
+    backdrop-filter: blur(3px);
+    align-items: flex-start;
+    justify-content: center;
+    padding: 40px 24px;
+    overflow-y: auto;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--white);
+    border-radius: 12px;
+    width: 100%;
+    max-width: 760px;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(28,43,58,0.25);
+    margin: auto;
+  }
+
+  .modal-header {
+    background: var(--navy);
+    padding: 28px 32px 24px;
+    position: relative;
+  }
+
+  .modal-number {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .modal-title {
+    font-family: Georgia, serif;
+    font-size: 24px;
+    color: var(--cream);
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+
+  .modal-meta {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 13px;
+    color: rgba(245,242,235,0.45);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(245,242,235,0.6);
+    font-size: 18px;
+    transition: background 0.15s;
+  }
+
+  .modal-close:hover { background: rgba(255,255,255,0.18); color: var(--cream); }
+
+  .modal-body {
+    padding: 0;
+  }
+
+  .modal-section {
+    padding: 24px 32px;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .modal-section:last-child { border-bottom: none; }
+
+  .modal-section-label {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .modal-one-line {
+    font-family: Georgia, serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink);
+    font-style: italic;
+    background: var(--cream);
+    padding: 16px 20px;
+    border-radius: 6px;
+    border-left: 3px solid var(--gold);
+  }
+
+  .modal-list {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    white-space: pre-wrap;
+  }
+
+  .modal-tags-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 18px 32px;
+    border-bottom: 1px solid var(--hairline);
+    align-items: center;
+  }
+
+  .modal-tags-label {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--ink-pale);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-right: 4px;
+  }
+
+  /* ── Moves Table ── */
+  .moves-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 13.5px;
+  }
+
+  .moves-table thead tr {
+    border-bottom: 2px solid var(--violet);
+  }
+
+  .moves-table th {
+    padding: 8px 14px 10px;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--violet);
+  }
+
+  .moves-table th:first-child { width: 38%; }
+
+  .moves-table tbody tr {
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .moves-table tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  .moves-table td {
+    padding: 13px 14px;
+    vertical-align: top;
+    line-height: 1.6;
+  }
+
+  .moves-table td:first-child {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .moves-table td:last-child {
+    color: var(--ink-soft);
+  }
+
+  .moves-table tbody tr:hover td {
+    background: #F5F2FB;
+  }
+
+  /* search highlight */
+  mark {
+    background: rgba(245,196,0,0.35);
+    color: inherit;
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+
+  /* ── No results ── */
+  .no-results {
+    text-align: center;
+    padding: 64px 32px;
+    display: none;
+  }
+
+  .no-results p {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    color: var(--ink-pale);
+  }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--hairline); border-radius: 3px; }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    .header-inner { padding: 0 16px; gap: 12px; }
+    .filter-inner { padding: 0 16px; }
+    main { padding: 24px 16px 60px; }
+    #cards-grid { grid-template-columns: 1fr; }
+    .modal { border-radius: 0; }
+    .modal-overlay { padding: 0; }
+    .modal-header { padding: 24px 20px 20px; }
+    .modal-section { padding: 20px; }
+    .modal-tags-row { padding: 16px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <span class="logo-xgi">XGI</span>
+      <span class="logo-room">Reading Room</span>
+    </a>
+    <div class="header-divider"></div>
+    <div class="search-wrap">
+      <svg class="search-icon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+        <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <input type="text" id="search" placeholder="Search titles, insights, moves…" autocomplete="off" spellcheck="false">
+    </div>
+    <span class="entry-count" id="entry-count"></span>
+  </div>
+</header>
+
+<!-- ── FILTER BAR ── -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <span class="filter-label">Workstream</span>
+    <button class="ws-chip active" data-ws="all" style="--chip-color:#4A5A6A">All</button>
+    <button class="ws-chip" data-ws="Pilot" style="--chip-color:#1C2B3A">Pilot</button>
+    <button class="ws-chip" data-ws="Investor Identity" style="--chip-color:#6366F1">Investor Identity</button>
+    <button class="ws-chip" data-ws="Audience &amp; Cohort" style="--chip-color:#00b86b">Audience &amp; Cohort</button>
+    <button class="ws-chip" data-ws="Revenue Model" style="--chip-color:#F59E0B">Revenue Model</button>
+    <button class="ws-chip" data-ws="Tech &amp; Infrastructure" style="--chip-color:#0EA5E9">Tech &amp; Infrastructure</button>
+    <button class="ws-chip" data-ws="FHN &amp; Research" style="--chip-color:#EC4899">FHN &amp; Research</button>
+    <button class="ws-chip" data-ws="Legal &amp; Compliance" style="--chip-color:#8B5CF6">Legal &amp; Compliance</button>
+  </div>
+</div>
+
+<!-- ── MAIN ── -->
+<main>
+  <div id="empty-state" class="empty-state" style="display:none">
+    <div class="empty-icon">📖</div>
+    <h2>The Reading Room is empty</h2>
+    <p>Paste an article into Claude and say <em>"Article Insight Extraction"</em> — the card will appear here automatically.</p>
+  </div>
+
+  <div id="no-results" class="no-results">
+    <p>No entries match your search.</p>
+  </div>
+
+  <div id="cards-grid"></div>
+</main>
+
+<!-- ── DETAIL MODAL ── -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="modal-number" id="modal-number"></div>
+      <div class="modal-title" id="modal-title"></div>
+      <div class="modal-meta" id="modal-meta"></div>
+      <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-tags-row" id="modal-tags-row"></div>
+      <div class="modal-section">
+        <div class="modal-section-label" style="color: var(--ink-pale)">One Line</div>
+        <div class="modal-one-line" id="modal-one-line"></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label" style="color: #D97706">Tensions</div>
+        <div class="modal-list" id="modal-tensions"></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label" style="color: var(--violet)">Transferable Moves</div>
+        <div class="modal-list" id="modal-moves"></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label" style="color: var(--green)">XGI Relevance</div>
+        <div class="modal-list" id="modal-xgi"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Workstream config ──
+const WS_COLORS = {
+  'Pilot':                 '#1C2B3A',
+  'Investor Identity':     '#6366F1',
+  'Audience & Cohort':     '#00b86b',
+  'Revenue Model':         '#F59E0B',
+  'Tech & Infrastructure': '#0EA5E9',
+  'FHN & Research':        '#EC4899',
+  'Legal & Compliance':    '#8B5CF6',
+};
+
+// ── Embedded data (seed entry) ──
+const SEED_ENTRIES = [
+  {
+    id: "entry-001",
+    number: "001",
+    title: "Consumer App Dark Arts",
+    author: "Nikita Bier",
+    publication: "Lenny's Newsletter",
+    date: "Aug 2026",
+    dateISO: "2026-08-01",
+    oneLine: "The metrics that make a product successful as a business are often the same ones that make it worse for the people using it — and the only way to see that clearly is to step outside the business.",
+    tensions: "• Engagement optimization works — and it grinds you down and atrophies the creative muscles you need to keep building well. Both are true simultaneously.\n\n• The best habit loops are built by obsessing over users — but the most meaningful product she built was the one she stopped optimizing for engagement entirely.\n\n• \"Start from the habit, not the goal\" is good product advice — and it's exactly what she didn't do for herself, producing something better.",
+    moves: [
+      {
+        point: "Work backward from the habit, not forward from the goal.",
+        context: "Don't design for the behavior you want — design for the behavior that already exists. The product earns its place inside a groove that's already worn, not by carving a new one."
+      },
+      {
+        point: "Audience selection often matters more than product quality.",
+        context: "Obsessive audiences — gamers, hobbyists, people with a strong identity stake in a domain — carry products that would fail with anyone else. Choosing the wrong audience is a structural problem no amount of polish fixes."
+      },
+      {
+        point: "Constraint removal as creative reset.",
+        context: "Urgency and engagement metrics produce tunnel vision over time. Stepping outside those constraints — even temporarily — is a tool, not a retreat. The builder who only optimizes eventually loses the ability to see."
+      },
+      {
+        point: "Utility and enrichment are different product goals.",
+        context: "Utility solves a problem. Enrichment changes how someone experiences their life. You can build utility accidentally by fixing friction — enrichment requires a deliberate decision about what the product is actually for."
+      },
+      {
+        point: "Don't start from blank.",
+        context: "90% of any problem has already been solved. Find the closest existing tool, clone it, and tweak for your specific use case. The differentiation comes from the tweak, not the scaffold."
+      }
+    ],
+    xgiRelevance: "1. INVESTOR IDENTITY SHIFT AS THE HABIT LOOP\nThe identity shift is the habit loop. What does an XGI investor do every week that reinforces the new identity? This question is upstream of UX decisions and hasn't been fully answered yet.\n\n2. AUDIENCE SELECTION → PILOT COHORT DESIGN\n$150K+ income floor is a proxy. The real question: which sub-segment within that cohort is obsessive about wealth-building the way gamers are obsessive about games? That's the beachhead.\n\n3. UTILITY vs. ENRICHMENT\nXGI is being built as utility infrastructure. The enrichment layer — what makes it feel like it's changing someone's relationship to money and identity, not just their portfolio — needs intentional design. It won't emerge from the utility layer on its own.",
+    workstreams: ["Investor Identity", "Audience & Cohort", "Pilot"]
+  }
+];
+
+// ── Storage (localStorage — works in any browser, including Netlify) ──
+const STORAGE_KEY = 'xgi-reading-room-entries';
+const STORAGE_VERSION = 'v2'; // bump this when seed entry content changes
+const VERSION_KEY = 'xgi-reading-room-version';
+
+function loadEntries() {
+  try {
+    const storedVersion = localStorage.getItem(VERSION_KEY);
+    const raw = localStorage.getItem(STORAGE_KEY);
+
+    if (raw) {
+      const stored = JSON.parse(raw);
+
+      if (storedVersion !== STORAGE_VERSION) {
+        // Version bump: refresh seed entries in-place, preserve any user-added entries
+        const seedIds = new Set(SEED_ENTRIES.map(e => e.id));
+        const userAdded = stored.filter(e => !seedIds.has(e.id));
+        // Seeds first (newest file order), then user-added entries after
+        const merged = [...SEED_ENTRIES, ...userAdded];
+        saveEntries(merged);
+        localStorage.setItem(VERSION_KEY, STORAGE_VERSION);
+        return merged;
+      }
+
+      // Same version: merge in any brand-new seed entries not yet stored
+      const storedIds = new Set(stored.map(e => e.id));
+      const newSeeds = SEED_ENTRIES.filter(e => !storedIds.has(e.id));
+      const merged = [...stored];
+      newSeeds.reverse().forEach(e => merged.unshift(e));
+      if (newSeeds.length > 0) saveEntries(merged);
+      return merged;
+    }
+  } catch (e) {
+    // parse error or storage unavailable — fall through
+  }
+  // First run
+  saveEntries(SEED_ENTRIES);
+  localStorage.setItem(VERSION_KEY, STORAGE_VERSION);
+  return SEED_ENTRIES;
+}
+
+function saveEntries(entries) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+  } catch (e) {
+    console.warn('localStorage write failed (storage full or private mode):', e);
+  }
+}
+
+// ── State ──
+let allEntries = [];
+let activeWS = 'all';
+let searchQuery = '';
+let openEntry = null;
+
+// ── Init ──
+allEntries = loadEntries();
+updateChipStyles();
+render();
+
+// ── Search ──
+document.getElementById('search').addEventListener('input', e => {
+  searchQuery = e.target.value.trim().toLowerCase();
+  render();
+});
+
+// ── Workstream filter ──
+document.querySelectorAll('.ws-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    activeWS = chip.dataset.ws;
+    document.querySelectorAll('.ws-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    render();
+  });
+});
+
+function updateChipStyles() {
+  document.querySelectorAll('.ws-chip').forEach(chip => {
+    const ws = chip.dataset.ws;
+    const color = ws === 'all' ? '#4A5A6A' : (WS_COLORS[ws] || '#4A5A6A');
+    chip.style.setProperty('--chip-color', color);
+    chip.addEventListener('mouseenter', () => {
+      if (!chip.classList.contains('active')) {
+        chip.style.color = color;
+        chip.style.borderColor = color + '66';
+      }
+    });
+    chip.addEventListener('mouseleave', () => {
+      if (!chip.classList.contains('active')) {
+        chip.style.color = '';
+        chip.style.borderColor = '';
+      }
+    });
+  });
+
+  // Active chip gets solid bg color
+  function applyActiveStyle() {
+    document.querySelectorAll('.ws-chip').forEach(chip => {
+      const ws = chip.dataset.ws;
+      const color = ws === 'all' ? '#4A5A6A' : (WS_COLORS[ws] || '#4A5A6A');
+      if (chip.classList.contains('active')) {
+        chip.style.background = color;
+        chip.style.color = '#fff';
+        chip.style.borderColor = color;
+      } else {
+        chip.style.background = '';
+        chip.style.color = '';
+        chip.style.borderColor = '';
+      }
+    });
+  }
+
+  document.querySelectorAll('.ws-chip').forEach(chip => {
+    chip.addEventListener('click', applyActiveStyle);
+  });
+  applyActiveStyle();
+}
+
+// ── Highlight ──
+function highlight(text, query) {
+  if (!query) return escHtml(text);
+  const safe = escHtml(text);
+  const re = new RegExp('(' + escRe(query) + ')', 'gi');
+  return safe.replace(re, '<mark>$1</mark>');
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function escRe(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// ── Render ──
+function render() {
+  let entries = allEntries;
+
+  // filter by workstream
+  if (activeWS !== 'all') {
+    entries = entries.filter(e => e.workstreams && e.workstreams.includes(activeWS));
+  }
+
+  // filter by search
+  if (searchQuery) {
+    entries = entries.filter(e => {
+      const hay = [e.title, e.author, e.publication, e.oneLine, e.tensions, e.moves, e.xgiRelevance, ...(e.workstreams || [])].join(' ').toLowerCase();
+      return hay.includes(searchQuery);
+    });
+  }
+
+  const grid = document.getElementById('cards-grid');
+  const emptyState = document.getElementById('empty-state');
+  const noResults = document.getElementById('no-results');
+  const countEl = document.getElementById('entry-count');
+
+  // count
+  const total = allEntries.length;
+  countEl.textContent = total === 0 ? '' : `${entries.length} of ${total}`;
+
+  if (allEntries.length === 0) {
+    emptyState.style.display = 'block';
+    noResults.style.display = 'none';
+    grid.innerHTML = '';
+    return;
+  }
+
+  emptyState.style.display = 'none';
+
+  if (entries.length === 0) {
+    noResults.style.display = 'block';
+    grid.innerHTML = '';
+    return;
+  }
+
+  noResults.style.display = 'none';
+
+  grid.innerHTML = entries.map(e => renderCard(e)).join('');
+
+  // attach click handlers
+  grid.querySelectorAll('.article-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const id = card.dataset.id;
+      const entry = allEntries.find(e => e.id === id);
+      if (entry) openModal(entry);
+    });
+  });
+}
+
+function renderCard(e) {
+  const q = searchQuery;
+  const tensionPreview = e.tensions.split('\n\n')[0].replace(/^[•\-]\s*/, '');
+  const tags = (e.workstreams || []).map(ws =>
+    `<span class="ws-tag" style="background:${WS_COLORS[ws] || '#4A5A6A'}">${escHtml(ws)}</span>`
+  ).join('');
+
+  return `
+    <div class="article-card" data-id="${escHtml(e.id)}">
+      <div class="card-header">
+        <div class="card-number">${highlight('#' + e.number, q)}</div>
+        <div class="card-title">${highlight(e.title, q)}</div>
+        <div class="card-meta">${highlight(e.author, q)}${e.publication ? ' · ' + highlight(e.publication, q) : ''}</div>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="card-section-label one-line-label">One Line</div>
+          <div class="card-one-line">${highlight(e.oneLine, q)}</div>
+        </div>
+        <div>
+          <div class="card-section-label tensions-label">Tensions</div>
+          <div class="card-section-text">${highlight(tensionPreview, q)}</div>
+        </div>
+      </div>
+      <div class="card-footer">
+        ${tags}
+        <span class="card-date">${escHtml(e.date)}</span>
+      </div>
+    </div>
+  `;
+}
+
+// ── Modal ──
+function openModal(entry) {
+  openEntry = entry;
+  const q = searchQuery;
+
+  document.getElementById('modal-number').textContent = '#' + entry.number;
+  document.getElementById('modal-title').textContent = entry.title;
+  document.getElementById('modal-meta').textContent =
+    [entry.author, entry.publication, entry.date].filter(Boolean).join(' · ');
+
+  // tags row
+  const tagsHtml = (entry.workstreams || []).map(ws =>
+    `<span class="ws-tag" style="background:${WS_COLORS[ws]||'#4A5A6A'}">${escHtml(ws)}</span>`
+  ).join('');
+  document.getElementById('modal-tags-row').innerHTML =
+    `<span class="modal-tags-label">Workstreams</span>${tagsHtml}`;
+
+  document.getElementById('modal-one-line').textContent = entry.oneLine;
+  document.getElementById('modal-tensions').textContent = entry.tensions;
+
+  // Moves: array → table, string → plain text (backward-compatible)
+  const movesEl = document.getElementById('modal-moves');
+  if (Array.isArray(entry.moves)) {
+    const rows = entry.moves.map((m, i) => `
+      <tr>
+        <td>${i + 1}. ${escHtml(m.point)}</td>
+        <td>${escHtml(m.context)}</td>
+      </tr>`).join('');
+    movesEl.innerHTML = `
+      <table class="moves-table">
+        <thead><tr><th>Move</th><th>Why it matters</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  } else {
+    movesEl.textContent = entry.moves;
+  }
+
+  document.getElementById('modal-xgi').textContent = entry.xgiRelevance;
+
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+  openEntry = null;
+}
+
+document.getElementById('modal-close').addEventListener('click', closeModal);
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
+// ── Public API ──
+window.addEntry = function(entry) {
+  const existing = allEntries.find(e => e.id === entry.id);
+  if (existing) { console.log('Entry already exists:', entry.id); return; }
+  allEntries.unshift(entry);
+  saveEntries(allEntries);
+  render();
+  return 'ok';
+};
+
+window.getAllEntries = function() { return allEntries; };
+</script>
+</body>
+</html>
