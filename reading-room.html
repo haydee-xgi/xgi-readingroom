@@ -30,7 +30,7 @@
     --ws-audience: #00b86b;
     --ws-revenue:  #F59E0B;
     --ws-tech:     #0EA5E9;
-    --ws-fhn:      #EC4899;
+    --ws-ecosystem: #EC4899;
     --ws-legal:    #8B5CF6;
     --ws-all:      #4A5A6A;
   }
@@ -605,7 +605,7 @@
     <button class="ws-chip" data-ws="Audience &amp; Cohort" style="--chip-color:#00b86b">Audience &amp; Cohort</button>
     <button class="ws-chip" data-ws="Revenue Model" style="--chip-color:#F59E0B">Revenue Model</button>
     <button class="ws-chip" data-ws="Tech &amp; Infrastructure" style="--chip-color:#0EA5E9">Tech &amp; Infrastructure</button>
-    <button class="ws-chip" data-ws="FHN &amp; Research" style="--chip-color:#EC4899">FHN &amp; Research</button>
+    <button class="ws-chip" data-ws="Ecosystem Research" style="--chip-color:#EC4899">Ecosystem Research</button>
     <button class="ws-chip" data-ws="Legal &amp; Compliance" style="--chip-color:#8B5CF6">Legal &amp; Compliance</button>
   </div>
 </div>
@@ -664,12 +664,47 @@ const WS_COLORS = {
   'Audience & Cohort':     '#00b86b',
   'Revenue Model':         '#F59E0B',
   'Tech & Infrastructure': '#0EA5E9',
-  'FHN & Research':        '#EC4899',
+  'Ecosystem Research':    '#EC4899',
   'Legal & Compliance':    '#8B5CF6',
 };
 
 // ── Embedded data (seed entry) ──
 const SEED_ENTRIES = [
+  {
+    id: "entry-002",
+    number: "002",
+    title: "Essential Wealth: A New Benchmark for Financial Security",
+    author: "K. Steven Brown and Genevieve Melford",
+    publication: "Aspen Institute Financial Security Program",
+    date: "Jun 2026",
+    dateISO: "2026-06-01",
+    oneLine: "Three out of four American households lack the wealth needed for resilience, investment, or legacy — not for lack of effort, but because no shared benchmark for 'enough' has ever existed.",
+    tensions: "• The framework defines essential wealth functionally — without prescribing homeownership or specific asset mixes — yet its thresholds are constructed almost entirely from homeownership and retirement benchmarks, embedding those norms structurally even while disclaiming them rhetorically.\n\n• The report makes a compelling case that the wealth gap is structural and not behavioral, yet its primary call to action is better measurement and metric adoption — which is itself an institutional behavior change, not a structural intervention.\n\n• The report is addressed to funders, policymakers, and program designers — the audiences least likely to experience the gap it describes — creating a persistent distance between the people defining sufficiency and the people trying to reach it.",
+    moves: [
+      {
+        point: "Dual-condition thresholds.",
+        context: "Requiring both liquid savings AND net worth to clear a milestone captures a real failure mode: households that look asset-rich on paper but can't absorb a shock because their wealth is illiquid. The two conditions serve different functions and aren't substitutable."
+      },
+      {
+        point: "Milestone segmentation over a single bar.",
+        context: "Breaking a gap into asset poverty → emergent → essential wealth lets you design different interventions for different populations rather than treating 'not wealthy enough' as a single undifferentiated problem."
+      },
+      {
+        point: "Functional definition of sufficiency.",
+        context: "Anchoring the metric to what wealth does — absorb shocks, enable investment, support well-being — rather than to an absolute dollar amount makes it more durable across contexts and harder to dismiss as aspirational."
+      },
+      {
+        point: "Liquid savings as rate-limiter.",
+        context: "The finding that homeowners with children are blocked from emergent wealth not by net worth but by sub-$2,000 cash savings isolates liquid savings as the pinch point — not assets, not income. The constraint is access speed, not asset size."
+      },
+      {
+        point: "Name the benchmark, then close the gap.",
+        context: "The report's core argument: without a shared definition of 'enough,' it's impossible to design toward it, advocate for it, or know when you've achieved it. Naming the target is a prerequisite to closing it — not a step that follows."
+      }
+    ],
+    xgiRelevance: "1. AUDIENCE & COHORT POSITIONING\nThe essential wealth framework creates precise vocabulary for where XGI's target client sits on a wealth arc. Clients at the $150K+ income floor who are first-in-family may have cleared asset poverty — and may be approaching emergent wealth — but lack access to the private market vehicles needed to cross into essential wealth. That's a positioning argument grounded in a credible third-party framework, not just a demographic claim.\n\n2. INVESTOR IDENTITY\nThe dual-condition insight maps directly onto XGI's identity-threat thesis. A client can have meaningful net worth — home equity, a 401k — but still feel financially fragile because their liquid cushion is thin. That fragility isn't irrational; it's accurate. XGI's UX must acknowledge where clients actually are on this arc, not assume they feel secure because their income is high.\n\n3. ECOSYSTEM RESEARCH\nThis is an Aspen FSP report (June 2026) with direct relevance to the FHN research pitch and the Joyce Klein contact thread. The essential wealth framework could anchor XGI's research questions about wealth readiness and serve as a reference document for the Q2/Q3 research collaboration ask.",
+    workstreams: ["Audience & Cohort", "Investor Identity", "Ecosystem Research"]
+  },
   {
     id: "entry-001",
     number: "001",
@@ -709,7 +744,7 @@ const SEED_ENTRIES = [
 
 // ── Storage (localStorage — works in any browser, including Netlify) ──
 const STORAGE_KEY = 'xgi-reading-room-entries';
-const STORAGE_VERSION = 'v2'; // bump this when seed entry content changes
+const STORAGE_VERSION = 'v3'; // bump this when seed entry content changes
 const VERSION_KEY = 'xgi-reading-room-version';
 
 function loadEntries() {
