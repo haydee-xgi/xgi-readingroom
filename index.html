@@ -671,6 +671,41 @@ const WS_COLORS = {
 // ── Embedded data (seed entry) ──
 const SEED_ENTRIES = [
   {
+    id: "entry-003",
+    number: "003",
+    title: "Predicting Startup Success with Personality Data",
+    author: "Paul O'Brien",
+    publication: "Startup Economist",
+    date: "Aug 2025",
+    dateISO: "2025-08-19",
+    oneLine: "Startup failure is not an idea problem — it's a psychology problem, and founder personality traits are now measurable and predictive enough that ignoring them is institutional negligence.",
+    tensions: "• The research validates that specific traits predict entrepreneurial success, but those traits were largely measured in populations that already had access to funding and acceleration — raising the question of whether the framework captures who has the traits or who gets the opportunity to demonstrate them.\n\n• The article argues for replacing gut-based investor intuition with empirical personality data, yet the same data was built on outcomes shaped by biased capital allocation — making it both the solution to bias and a potential encoding of it.\n\n• Founder archetypes are presented as fixed-enough to guide team composition, but the companion claim is that these traits are developable — you can grow them. The article never fully resolves whether you're hiring for who someone is or who they're becoming.",
+    moves: [
+      {
+        point: "Suppressed ≠ Absent.",
+        context: "The traits that predict success exist across the population but are blocked by environment — not missing from certain people. This reframes 'who has what it takes' into 'who has had the conditions to demonstrate it.'"
+      },
+      {
+        point: "Team as Portfolio.",
+        context: "No single founder type wins alone. Startups succeed when Visionary, Executor, Mobilizer, and Optimizer archetypes are collectively covered. The unit of psychology is the team, not the individual."
+      },
+      {
+        point: "Replace Vibe with Structure.",
+        context: "Investor intuition about founders is both biased and unnecessary — validated, outcome-linked trait data already exists. Any selection process that relies on instinct is choosing bias over data."
+      },
+      {
+        point: "Preconditioning as Suppressor.",
+        context: "For women and marginalized founders, learned behaviors and childhood conditioning suppress traits that are actually present. This is a research-supported suppression mechanism, not a character deficit."
+      },
+      {
+        point: "Founder-Stage Fit.",
+        context: "Being entrepreneurial and being a good startup founder are not the same thing. Some traits that predict early-stage venture creation conflict with what scaling actually requires — fit must be assessed against stage, not just category."
+      }
+    ],
+    xgiRelevance: "1. INVESTOR IDENTITY\nThe article's central reframe — that traits predicting success are suppressed by environment, not absent in the person — is structurally identical to XGI's thesis. Where O'Brien applies this to founders, XGI applies it to investors. The breakthrough generation isn't missing investor instincts; systemic suppressors have blocked them from the conditions where those instincts develop. This is peer-adjacent research validation for XGI's core differentiating claim.\n\n2. AUDIENCE & COHORT\nThe Jo Ann Hair / Pierre Clark exchange provides direct academic scaffolding for the Money Memories methodology: the success of women entrepreneurs is greatly influenced by preconditioning, childhood traumas, and learned behaviors. That's the same formation mechanism XGI's interview methodology is designed to surface. If you pitch the FHN research collaboration, this is citable context for why childhood artifact anchoring is a methodologically grounded approach, not a soft add-on.\n\n3. INVESTOR IDENTITY / RUBRIC DESIGN\nThe 'replace vibe with structure' move maps to XGI's rubric rationale. O'Brien frames gut-based investing as malpractice; XGI's rubric makes the same argument from the investor's side — a structured onboarding replaces the informal credentialing signals that screen out breakthrough-generation clients before any conversation about competence begins.",
+    workstreams: ["Investor Identity", "Audience & Cohort"]
+  },
+  {
     id: "entry-002",
     number: "002",
     title: "Essential Wealth: A New Benchmark for Financial Security",
@@ -744,7 +779,7 @@ const SEED_ENTRIES = [
 
 // ── Storage (localStorage — works in any browser, including Netlify) ──
 const STORAGE_KEY = 'xgi-reading-room-entries';
-const STORAGE_VERSION = 'v3'; // bump this when seed entry content changes
+const STORAGE_VERSION = 'v4'; // bump this when seed entry content changes
 const VERSION_KEY = 'xgi-reading-room-version';
 
 function loadEntries() {
