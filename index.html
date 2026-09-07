@@ -671,6 +671,19 @@ const WS_COLORS = {
 // ── Embedded data (seed entry) ──
 const SEED_ENTRIES = [
   {
+    id: "entry-004",
+    number: "004",
+    title: "Ask for More Pay and Get Penalized, Stay Quiet and Fall Behind",
+    author: "Stanford GSB / Michele Gelfand",
+    publication: "Stanford Graduate School of Business",
+    date: "Aug 2026",
+    dateISO: "2026-08-27",
+    oneLine: "Lower-class workers are less likely to negotiate salary — and more likely to face backlash when they do — creating a compounding wealth gap that employers can't fix by simply encouraging people to speak up.",
+    tensions: "• The research names a structural trap that sits at the core of XGI's audience: the breakthrough generation already navigates a class-shaped penalty for advocating for themselves — XGI's pitch must acknowledge that wealth-building is not just about access to products, but about undoing the internalized logic that asking is dangerous.\n• Framing financial empowerment as 'just negotiate more' or 'just invest' misses the psychological load first-gen high earners carry — XGI's onboarding and community design should address the belief system, not just the product.\n• The $800K lifetime earnings gap from a single early negotiation moment is a powerful data point for XGI's value proposition — small decisions, compounded, determine financial destiny.",
+    workstream: "Audience & Cohort",
+    url: "https://stanford.io/4qHhpi1"
+  },
+  {
     id: "entry-003",
     number: "003",
     title: "Predicting Startup Success with Personality Data",
@@ -779,7 +792,7 @@ const SEED_ENTRIES = [
 
 // ── Storage (localStorage — works in any browser, including Netlify) ──
 const STORAGE_KEY = 'xgi-reading-room-entries';
-const STORAGE_VERSION = 'v4'; // bump this when seed entry content changes
+const STORAGE_VERSION = 'v5'; // bump this when seed entry content changes
 const VERSION_KEY = 'xgi-reading-room-version';
 
 function loadEntries() {
