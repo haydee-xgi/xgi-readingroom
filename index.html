@@ -671,6 +671,42 @@ const WS_COLORS = {
 // ── Embedded data (seed entry) ──
 const SEED_ENTRIES = [
   {
+    id: "entry-005",
+    number: "005",
+    title: "The new set of principles for building AI products, and agent exploitation",
+    author: "Scott Belsky",
+    publication: "Implications (Edition #47)",
+    date: "Sep 2026",
+    dateISO: "2026-09-27",
+    oneLine: "As consumer AI agents become the interface to our lives, the winning products will be the ones that earn trust (not just privacy), capture intent, and dissolve the 'lazy margin' companies have long profited from.",
+    tensions: "• Communal intelligence needs users to trade privacy for a 'sixth sense', but Belsky says the privacy people will trade is directly proportional to their trust in the product. Trust is the currency, and trust is about auditability and judgment, not privacy alone.\n\n• Agents give ordinary people a superpower once reserved for the wealthy with world-class assistants, yet he warns of a new inequality: people with agents pay the lowest prices while everyone else pays full price.\n\n• Agents erase 'friction by design' and lazy margin, but companies will likely respond with AI-driven dynamic pricing, discriminatory promotions and new analog barriers to scarcity.\n\n• Early adopters ('Explorers') trust by default and forgive missteps, while later adopters ('Guardians') treat their data as a precious asset. The product has to serve both, and trust is the bridge between them.",
+    moves: [
+      {
+        point: "Explorers vs. Guardians replaces Visionaries vs. Pragmatists.",
+        context: "The adoption curve is now segmented by willingness to share data, so onboarding has to be designed to convert Guardians, not just polish features for Pragmatists."
+      },
+      {
+        point: "Trust is a vector of innovation, separate from privacy.",
+        context: "Being able to inspect and audit an agent's reasoning and actions is a product feature that can differentiate, much as security did for Coinbase."
+      },
+      {
+        point: "First-mile users are still lazy, vain and selfish.",
+        context: "ROI now applies to data shared as well as time spent, so a new user expects a fast, visible return on the access they grant."
+      },
+      {
+        point: "Contextual selective memory is a moat.",
+        context: "Deciding what to remember and what to forget, compounded over time and across platforms, is hard to replicate."
+      },
+      {
+        point: "Scarce, earned access is how products scale 'special'.",
+        context: "As intelligence becomes ubiquitous, people seek things that differentiate them, so preferred and earned access drives loyalty and identity."
+      }
+    ],
+    xgiRelevance: "1. PILOT COHORT (EXPLORERS VS. GUARDIANS)\nThe Explorers/Guardians lens is a useful way to think about who joins the pilot first and how to bring in the more cautious high earners. XGI's first-in-family audience may skew Guardian on data sharing, which makes the trust bridge a design question for onboarding.\n\n2. TRUST AS A PRODUCT FEATURE\nA platform that handles private-deal access and personal financial data can treat inspectability (why a deal is shown, how fit is judged) as a differentiator, not just compliance. This connects to the Tech & Infrastructure decisions on what data is collected and how it is explained back to the user.\n\n3. LAZY MARGIN AND FEE/DILIGENCE POSITIONING\nAs agents make fee comparison and diligence effortless, opacity stops being a viable margin source. XGI's positioning around transparency and comprehension becomes more defensible, and the revenue model should assume informed, agent-assisted customers.\n\n4. SCALING 'SPECIAL' AND BELONGING\nBelsky's point that people want scarce things that make them feel differentiated echoes XGI's belonging design principles. Earned or preferred access to private deals is a natural expression of that for the breakthrough generation.",
+    workstreams: ["Audience & Cohort", "Investor Identity", "Tech & Infrastructure"],
+    url: "https://www.implications.com/p/product-realizations-for-consumer"
+  },
+  {
     id: "entry-004",
     number: "004",
     title: "Ask for More Pay and Get Penalized, Stay Quiet and Fall Behind",
@@ -811,7 +847,7 @@ const SEED_ENTRIES = [
 
 // ── Storage (localStorage — works in any browser, including Netlify) ──
 const STORAGE_KEY = 'xgi-reading-room-entries';
-const STORAGE_VERSION = 'v5'; // bump this when seed entry content changes
+const STORAGE_VERSION = 'v6'; // bump this when seed entry content changes
 const VERSION_KEY = 'xgi-reading-room-version';
 
 function loadEntries() {
