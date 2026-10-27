@@ -671,6 +671,48 @@ const WS_COLORS = {
 // ── Embedded data (seed entry) ──
 const SEED_ENTRIES = [
   {
+    id: "entry-007",
+    number: "007",
+    title: "5 Things Top Product Leaders Love",
+    author: "Scott Belsky",
+    publication: "Implications (Edition #46)",
+    date: "Aug 2026",
+    dateISO: "2026-08-19",
+    oneLine: "The next product moat isn't features or funding — it's internal operating intelligence, agent access agreements, and product leaders who love the uncomfortable work: doubt, debate, narrative, team-building, and radical customer empathy.",
+    tensions: "• The best software is now the software only *you* have — custom-built internal tools that encode institutional knowledge. But most startups still build for users while ignoring the compounding advantage of building for themselves.\n\n• Agents are hitting the same walls users hit — CAPTCHAs, rate limits, bot detection — but the fix isn't better scraping; it's preferred API access. First movers who negotiate "favored agent" status with key platforms will own the agentic layer others can't reach.\n\n• Product leaders are rewarded for shipping, but the work that actually makes great products — sitting with doubt, arguing ideas out, crafting narrative, hiring slowly — is structurally undervalued and under-practiced.\n\n• Customer empathy is universally cited and rarely practiced. The five things Belsky names aren't nice-to-haves; they're descriptions of what separates durable products from feature lists with a checkout button.",
+    moves: [
+      { point: "Build XGI's internal OS early.", context: "The intelligence that makes XGI's deal sourcing, member matching, and risk framing proprietary lives in process documentation, templates, and internal tools — start encoding it now, before scale forces it." },
+      { point: "Secure agent access proactively.", context: "As XGI integrates with brokerage infrastructure, data providers, and custodians — negotiate API relationships that will survive an agentic layer, not just a human-operated one." },
+      { point: "Use doubt as a product signal.", context: "When a feature or flow feels uncertain, don't smooth it over — surface it with the team. The doubt is data." },
+      { point: "Build narrative at every level.", context: "Investors, pilot users, partners, and potential hires all need a story they can repeat. Don't reserve narrative craft for the pitch deck." },
+      { point: "Get in the room with users before the product is ready.", context: "Belsky's fifth point — time with customers — is most actionable in pre-pilot stage, when what you learn still changes the architecture." }
+    ],
+    xgiRelevance: "1. INTERNAL INTELLIGENCE AS MOAT\nXGI's edge in private deal sourcing is process knowledge — how deals are found, vetted, structured, and presented. That knowledge encoded in internal tools (even lightweight ones) becomes defensible. This is a near-term action item, not a future aspiration.\n\n2. AGENTIC INFRASTRUCTURE FORESIGHT\nAs XGI builds toward a platform, the "favored agent" concept matters: relationships with data providers, custodians, and deal platforms should be negotiated for API access, not just human-UI access. Worth flagging in the tech infrastructure workstream now.\n\n3. PRODUCT LEADERSHIP OPERATING MODEL\nThe five traits Belsky names read as a checklist for Haydee and Monica's co-founder dynamic — especially debate, narrative, and customer proximity. Useful frame for a co-founder working session.\n\n4. PRE-PILOT USER ENGAGEMENT URGENCY\nThe fifth move (time with customers) is most leveraged right now, before the pilot locks in. XGI should be in 1:1 conversations with 10–15 target users before the pilot spec is finalized. This supports the Audience & Cohort and Pilot workstreams directly.",
+    workstreams: ["Tech & Infrastructure", "Pilot", "Audience & Cohort"],
+    url: "https://www.implications.com/p/5-things-top-product-leaders-love"
+  },
+  {
+    id: "entry-006",
+    number: "006",
+    title: "Next Generation of Investors: Understanding the Needs of HNW Investors Under 45",
+    author: "Ryan Munson & Genevieve Hayman, PhD",
+    publication: "CFA Institute Research and Policy Center",
+    date: "Mar 2026",
+    dateISO: "2026-03-23",
+    oneLine: "Young high-net-worth investors are reshaping wealth management not by rejecting advisers but by demanding a new contract: digitally fluent, values-aligned, trust-verified, and activated by life-event timing rather than age.",
+    tensions: "• The "young investor" is misread as tech-first and adviser-skeptical — but 90%+ use paid advice and trust human advisers more than any other source. The real tension is that advisers haven't adapted to how trust is now earned (credentials + data security + performance > rapport).\n\n• Values are near-universal as stated preferences (92%) but only 43% actively pursue values-driven investing — meaning the platform that closes the intention-action gap wins, not the one that simply offers ESG products.\n\n• Information is decentralized (social media, AI, finfluencers, peer networks) but decision-making remains centralized with advisers. Young investors want to be educated, not managed — they arrive informed and expect to be met there.\n\n• Life events — not age milestones — trigger adviser relationships in 2 out of 3 cases. The industry still markets on demographics; the actual acquisition window is situational and often invisible to traditional pipelines.",
+    moves: [
+      { point: "Reframe "trust" as functional, not relational.", context: "Data security, verified credentials, and benchmark performance are the new trust signals — design onboarding and communications around these, not warmth." },
+      { point: "Build for life-event detection.", context: "The highest-conversion moment is situational — liquidity event, inheritance, job change, divorce. Position XGI's entry point around these triggers, not generic "start investing" messaging." },
+      { point: "Close the values gap operationally.", context: "Surface values-alignment at the deal level, not just the brand level — let users see which deal matches which stated value and why." },
+      { point: "Design for the informed arrival.", context: "Assume users have already done research. The interface should honor their prior knowledge, not re-educate from scratch." },
+      { point: "Use "right-time" outreach, not lifecycle outreach.", context: "Segment by life stage trigger, not age cohort — a 38-year-old post-exit is a better target than a 30-year-old at no inflection point." }
+    ],
+    xgiRelevance: "1. AUDIENCE CONFIRMATION\nThis is the most rigorous third-party validation XGI has of its target segment. HNW under-45, values-aware, adviser-open but demanding better — the CFA data maps almost exactly onto XGI's breakthrough generation definition. Use in investor decks and pilot pitch without hedging.\n\n2. ACQUISITION TIMING INSIGHT\nThe "right-time" life event finding reframes XGI's go-to-market. Pilot recruitment shouldn't market to demographics — it should identify people in or near a liquidity/transition moment. This sharpens Monica's outreach criteria immediately.\n\n3. TRUST ARCHITECTURE INPUT\nThe functional trust signals (credentials, security, performance) should be baked into XGI's UX from day one — not added as a polish layer. This informs platform design and the pilot brief.\n\n4. VALUES-ACTION GAP AS PRODUCT OPPORTUNITY\n92% say values matter; only 43% act on it. XGI's deal-level values tagging could be the feature that converts stated preference into action — a genuine differentiator, not just a brand claim.\n\n5. COMPETITIVE INTELLIGENCE\nThe report's prescription — "scale personalization while preserving trust" — is exactly what legacy advisers haven't solved. XGI's model (curated private deals + human-scale access) is structurally positioned to deliver this. Useful framing for competitive narrative.",
+    workstreams: ["Audience & Cohort", "Investor Identity", "Pilot"],
+    url: "https://rpc.cfainstitute.org/research/reports/2026/next-generation-of-investors"
+  },
+  {
     id: "entry-005",
     number: "005",
     title: "The new set of principles for building AI products, and agent exploitation",
@@ -847,7 +889,7 @@ const SEED_ENTRIES = [
 
 // ── Storage (localStorage — works in any browser, including Netlify) ──
 const STORAGE_KEY = 'xgi-reading-room-entries';
-const STORAGE_VERSION = 'v6'; // bump this when seed entry content changes
+const STORAGE_VERSION = 'v8'; // bump this when seed entry content changes
 const VERSION_KEY = 'xgi-reading-room-version';
 
 function loadEntries() {
